@@ -1,10 +1,14 @@
+var userName = ''
+var baseApi = 'https://api.github.com/'
+
 function getIssues() {
-  const url = 'https://api.github.com/repos/learn-co-curriculum/javascript-fetch-lab/issues'
+  const url = `${baseApi}repos/${userName}/javascript-fetch-lab/issues`
   fetch(url).then(response => response.json()).then(json => showIssues(json))
 }
 
 function showIssues(json) {
-  const issuesList = "<ul>" + issuesJson.map(i => {
+  // console.log(json)
+  const issuesList = "<ul>" + json.map(i => {
     return `
       <li>
         <h3>${i.title}</h3>
@@ -12,7 +16,6 @@ function showIssues(json) {
       </li>`
   }).join('') + "</ul>"
   document.getElementById('issues').innerHTML = issuesList
-
 }
 
 function getIssuesInput() {
@@ -22,28 +25,30 @@ function getIssuesInput() {
 }
 
 function createIssue() {
-  const url = 'https://api.github.com/repos/learn-co-curriculum/javascript-fetch-lab/issues'
+  const url = `${baseApi}repos/${userName}/javascript-fetch-lab/issues`
   fetch(url, {
     method: 'post',
     body: JSON.stringify(getIssuesInput()),
     headers: {
-      Authorization: 'token 75b6e8b4d2be4a55c47ccf6b210b51ed87eeafe0'
+      Authorization: 'token  81eeb2eecf8eebc97106ef864e82f44e5a2f2ec7'
+      // ${getToken()}'
     }
-  }).then(response => response.json()).then(json => console.log(json))
+  }).then(response => response.json()).then(getIssues())
 }
 
 function showForkedRepo(json) {
+  userName = json.owner.login
   const repo = `<h2>showForkedRepo</h2><p><a href='${json.html_url}'>${json.name}</a></p>`
   document.getElementById('results').innerHTML += repo
 }
 
 function forkRepo() {
   const repo = 'learn-co-curriculum/javascript-fetch-lab'
-  const url = `https://api.github.com/repos/${repo}/forks`
+  const url = `${baseApi}repos/${repo}/forks`
   fetch(url, {
     method: 'post',
     headers: {
-      Authorization: 'token 75b6e8b4d2be4a55c47ccf6b210b51ed87eeafe0'
+      Authorization: 'token  81eeb2eecf8eebc97106ef864e82f44e5a2f2ec7'
     }
   }).then(response => response.json()).then(json => showForkedRepo(json))
 }
@@ -51,7 +56,6 @@ function forkRepo() {
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
-  // return '75b6e8b4d2be4a55c47ccf6b210b51ed87eeafe0'
-  return ''
-
+  return '1d377c033933f48fa4360286edd17a0204f0281c '
+  // return ''
 }
