@@ -1,4 +1,4 @@
-# JavaScript `fetch()` Lab
+i# JavaScript `fetch()` Lab
 
 ## Overview
 In this lab, you'll use `fetch()` to get remote data from and write data to GitHub.
